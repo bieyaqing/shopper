@@ -1,0 +1,139 @@
+// discover page
+var expFEIndex = 0;
+function expendFriendEvent(){
+	expFEIndex += 1;
+	if(expFEIndex % 2 == 1){
+		resetPELayout();
+		$("#feexpBtn").removeClass("glyphicon glyphicon-collapse-down");
+		$("#feexpBtn").addClass("glyphicon glyphicon-collapse-up");
+		setTimeout(function(){
+			var changepxVal = $("#publiceventbox").outerHeight() - 40;
+			$("#friendeventbox").outerHeight((($("#maincontent").outerHeight()-$("#searchbar").outerHeight())/2)-$("#friendeventheader").outerHeight()-16 + changepxVal);
+			$("#publiceventbox").outerHeight((($("#maincontent").outerHeight()-$("#searchbar").outerHeight())/2)-$("#publiceventheader").outerHeight()-16 - changepxVal);
+		},200);
+	}else{
+		resetDiscoverLayout();
+	}
+}
+
+var expPEIndex = 0;
+function expendPublicEvent(){
+	expPEIndex += 1;
+	if(expPEIndex % 2 == 1){
+		resetFELayout();
+		$("#peexpBtn").removeClass("glyphicon glyphicon-collapse-down");
+		$("#peexpBtn").addClass("glyphicon glyphicon-collapse-up");
+		setTimeout(function(){
+			var changepxVal = $("#friendeventbox").outerHeight() - 40;
+			$("#friendeventbox").outerHeight((($("#maincontent").outerHeight()-$("#searchbar").outerHeight())/2)-$("#friendeventheader").outerHeight()-16 - changepxVal);
+			$("#publiceventbox").outerHeight((($("#maincontent").outerHeight()-$("#searchbar").outerHeight())/2)-$("#publiceventheader").outerHeight()-16 + changepxVal);
+		},200);
+	}else{
+		resetDiscoverLayout();
+	}
+}
+
+function resetFELayout(){
+	expFEIndex = 0;
+	$("#feexpBtn").removeClass("glyphicon glyphicon-collapse-up");
+	$("#feexpBtn").addClass("glyphicon glyphicon-collapse-down");
+	$("#friendeventbox").outerHeight((($("#maincontent").outerHeight()-$("#searchbar").outerHeight())/2)-$("#friendeventheader").outerHeight()-16);
+	$("#publiceventbox").outerHeight((($("#maincontent").outerHeight()-$("#searchbar").outerHeight())/2)-$("#publiceventheader").outerHeight()-16);
+}
+
+function resetPELayout(){
+	expPEIndex = 0;
+	$("#peexpBtn").removeClass("glyphicon glyphicon-collapse-up");
+	$("#peexpBtn").addClass("glyphicon glyphicon-collapse-down");
+	$("#friendeventbox").outerHeight((($("#maincontent").outerHeight()-$("#searchbar").outerHeight())/2)-$("#friendeventheader").outerHeight()-16);
+	$("#publiceventbox").outerHeight((($("#maincontent").outerHeight()-$("#searchbar").outerHeight())/2)-$("#publiceventheader").outerHeight()-16);
+}
+
+function resetDiscoverLayout(){
+	resetFELayout();
+	resetPELayout();
+}
+
+function viewAndJoinEvent(id){
+	var eventPageHtml = '\
+		<div class="container">\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<div class="thumbnail">\
+						<img src="img/photo0'+id+'.png" class="img-rounded" onclick="imgExpend()" id="eventDetailImg">\
+					</div>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<div class="thumbnail">\
+						<div class="row">\
+							<div class="col-xs-12">\
+								<font size="2">Description blah blah blah blah blah blah blah blah</font>\
+							</div>\
+						</div>\
+						<div class="row">\
+							<div class="col-xs-6" id="tag">\
+								<font id="tagLabel" size="2">Category:</font>\
+							</div>\
+							<div class="col-xs-6" id="tag">\
+								<font id="tagLabel" size="2">Clothes</font>\
+							</div>\
+						</div>\
+						<div class="row">\
+							<div class="col-xs-6" id="editTime">\
+								<font id="durationLabel" size="2">Ends in 29 min</font>\
+							</div>\
+							<div class="col-xs-6">\
+								<font size="2">1 / 3 Join</font> <button class="btn btn-info btn-xs" onclick="viewParticipants2('+id+')">View</button>\
+							</div>\
+						</div>\
+					</div>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<div class="thumbnail" id="chatBox">\
+						<div class="row">\
+							<div class="col-xs-3 col-sm-2"><img src="img/photo0'+id+'.png" class="img-responsive img-rounded myimg"></div>\
+							<div class="col-xs-9 col-sm-10">\
+								<div class="row mynegtop"><font size="1"><strong>Where should I meet you?</strong></font></div>\
+								<div class="row mynegtop"><font size="1"><small>Bie Yaqing <em>1 mins ago</em></small></font></div>\
+							</div>\
+						</div>\
+					</div>\
+					<div class="thumbnail" id="chatBox">\
+						<div class="row">\
+							<div class="col-xs-9 col-sm-10"><input type="text" class="form-control input-sm"></div>\
+							<div class="col-xs-3 col-sm-2 myleftpadding"><button class="btn btn-primary btn-sm">Post</button></div>\
+						</div>\
+					</div>\
+				</div>\
+			</div>\
+		</div>';
+	$("#sidecontent").html(eventPageHtml);
+	$("#headertext").html("EventTitle");
+	$("#backbtn").removeClass("sr-only");
+	$("#backbtn").attr("onclick","backToDiscover()");
+	$("#headerbtn2").removeClass("sr-only");
+	$("#headerbtn2").attr("onclick","joinEvent("+id+")");
+	$("#headerbtn2").html("Join");
+	//$("#createbox").outerHeight($("#maincontent").outerHeight()-32);
+	
+	$("#sidecontent").css("left","0");
+}
+
+function backToDiscover(){
+	$("#sidecontent").css("left","100%");
+	$("#headertext").html("Discover");
+	$("#backbtn").addClass("sr-only");
+	$("#headerbtn2").addClass("sr-only");
+}
+
+function joinEvent(id){
+	
+	
+	//success
+	backToEvent2();
+	backToDiscover();
+}
