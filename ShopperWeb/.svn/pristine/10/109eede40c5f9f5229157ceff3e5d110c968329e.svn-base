@@ -1,0 +1,765 @@
+// mine page
+var expCEIndex = 0;
+function expendCreateEvent(){
+	expCEIndex += 1;
+	if(expCEIndex % 2 == 1){
+		resetJELayout();
+		$("#ceexpBtn").removeClass("glyphicon glyphicon-collapse-down");
+		$("#ceexpBtn").addClass("glyphicon glyphicon-collapse-up");
+		setTimeout(function(){
+			var changepxVal = $("#joineventbox").outerHeight() - 34;
+			$("#createeventbox").outerHeight(($("#maincontent").outerHeight()/2)-$("#createeventheader").outerHeight()-16 + changepxVal);
+			$("#joineventbox").outerHeight(($("#maincontent").outerHeight()/2)-$("#joineventheader").outerHeight()-16 - changepxVal);
+		},200);
+	}else{
+		resetMineLayout();
+	}
+}
+
+function onloadLocationPicker(){
+	$('.latlng').locationPicker();
+}
+
+var expJEIndex = 0;
+function expendJoinEvent(){
+	expJEIndex += 1;
+	if(expJEIndex % 2 == 1){
+		resetCELayout();
+		$("#jeexpBtn").removeClass("glyphicon glyphicon-collapse-down");
+		$("#jeexpBtn").addClass("glyphicon glyphicon-collapse-up");
+		setTimeout(function(){
+			var changepxVal = $("#createeventbox").outerHeight() - 34;
+			$("#createeventbox").outerHeight(($("#maincontent").outerHeight()/2)-$("#createeventheader").outerHeight()-16 - changepxVal);
+			$("#joineventbox").outerHeight(($("#maincontent").outerHeight()/2)-$("#joineventheader").outerHeight()-16 + changepxVal);
+		},200);
+	}else{
+		resetMineLayout();
+	}
+}
+
+function resetCELayout(){
+	expCEIndex = 0;
+	$("#ceexpBtn").removeClass("glyphicon glyphicon-collapse-up");
+	$("#ceexpBtn").addClass("glyphicon glyphicon-collapse-down");
+	$("#createeventbox").outerHeight(($("#maincontent").outerHeight()/2)-$("#createeventheader").outerHeight()-16);
+	$("#joineventbox").outerHeight(($("#maincontent").outerHeight()/2)-$("#joineventheader").outerHeight()-16);
+}
+
+function resetJELayout(){
+	expJEIndex = 0;
+	$("#jeexpBtn").removeClass("glyphicon glyphicon-collapse-up");
+	$("#jeexpBtn").addClass("glyphicon glyphicon-collapse-down");
+	$("#createeventbox").outerHeight(($("#maincontent").outerHeight()/2)-$("#createeventheader").outerHeight()-16);
+	$("#joineventbox").outerHeight(($("#maincontent").outerHeight()/2)-$("#joineventheader").outerHeight()-16);
+}
+
+function resetMineLayout(){
+	resetCELayout();
+	resetJELayout();
+}
+
+var OrgImgURL = "";
+
+function uploadEventPhoto(){
+	$(document).ready(function() {
+		var fd = new FormData(document.getElementById("uploadPhoto"));
+		$.ajax({
+			url : '/ShopperWeb/FileUploadServlet?json={"fileType":"image,jpeg,jpg,png","uploadDirectory":"org_files","folderName":"logo"}',
+			type : "POST",
+			data : fd,
+			dataType: 'json',
+			processData : false,
+			contentType : false,
+			error : function(err) {
+				alert("upload fail");
+			},
+			success : function(data) {
+				console.log(data);
+				var status = data["status"];
+				var message = data["message"];
+				if(status==0){
+					alert("upload fail");
+				}else{
+					var fileUrl = data["fileUrl"];
+					OrgImgURL = fileUrl;
+					$("#forOrgUpload").html('<img id="createImage" src="'+OrgImgURL+'" class="img-responsive img-rounded mybigimg">');
+				}
+			}
+		});
+	});
+	
+}
+
+function launchCreateEvent(){
+	var createPageHtml = '\
+		<div class="container">\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<input id="pubfriswitch" data-label-text="Publish" type="checkbox">\
+				</div>\
+			</div>\
+			<div class="row mytopbuffer">\
+				<div class="col-xs-12">\
+					<input type="text" id="eventtitle" class="form-control input-sm" placeholder="Event title">\
+				</div>\
+			</div>\
+			<div class="row mytopbuffer">\
+				<div class="col-xs-4">\
+					<form class="form-group" enctype="multipart/form-data" method="post" name="uploadPhoto" id="uploadPhoto">\
+						<label class="thumbnail" for="orgUploadLogo" id="forOrgUpload">\
+							<img id="createImage" src="img/util/upload.jpeg" class="img-responsive img-rounded mybigimg">\
+						</label>\
+						<input type="file" class="sr-only" name="file" id="orgUploadLogo" onchange="uploadEventPhoto()">\
+					</form>\
+				</div>\
+				<div class="col-xs-8 myleftpadding">\
+					<div class="row">\
+						<div class="col-xs-12">\
+							<select id="category" class="form-control input-sm">\
+								<option value="Other">Choose a category</option>\
+								<option value="Clothes">Clothes</option>\
+								<option value="Beauty">Beauty</option>\
+								<option value="Glasses">Glasses</option>\
+								<option value="Sports">Sports</option>\
+								<option value="Entertainments">Entertainments</option>\
+								<option value="Electronics">Electronics</option>\
+								<option value="Healthy Care">Healthy Care</option>\
+								<option value="Kitchen">Kitchen</option>\
+								<option value="Other">Other</option>\
+							</select>\
+						</div>\
+					</div>\
+					<div class="row">\
+						<div class="col-xs-12">\
+							<select id="duration" class="form-control input-sm">\
+								<option value=0>Choose a duration</option>\
+								<option value=5>5 min</option>\
+								<option value=10>10 min</option>\
+								<option value=15>15 min</option>\
+								<option value=20>20 min</option>\
+								<option value=25>25 min</option>\
+								<option value=30>30 min</option>\
+								<option value=40>40 min</option>\
+								<option value=50>50 min</option>\
+								<option value=60>1 hr</option>\
+								<option value=90>1 hr 30 min</option>\
+								<option value=120>2 hr</option>\
+								<option value=150>2 hr 30 min</option>\
+								<option value=180>3 hr</option>\
+								<option value=210>3 hr 30 min</option>\
+								<option value=240>4 hr</option>\
+								<option value=300>5 hr</option>\
+								<option value=360>6 hr</option>\
+							</select>\
+						</div>\
+					</div>\
+				</div>\
+			</div>\
+			<div class="row mytopbuffer">\
+				<div class="col-xs-3">\
+					<font size="5"><span onclick="minusCapacity()" class="glyphicon glyphicon-minus pull-right byqcontrol"></span></font>\
+				</div>\
+				<div class="col-xs-6">\
+					<font size="4"><strong id="capacityValue">3</strong></font><font size="2">&nbsp;&nbsp;&nbsp;<em>participants</em></font>\
+				</div>\
+				<div class="col-xs-3">\
+					<font size="5"><span onclick="addCapacity()" class="glyphicon glyphicon-plus byqcontrol"></span></font>\
+				</div>\
+			</div>\
+			<div class="row mytopbuffer myLocationPicker">\
+				<div class="col-xs-12">\
+					<input id="coordinate" type="text" class="form-control input-sm latlng" placeholder="Location">\
+				</div>\
+			</div>\
+			<div class="row mytopbuffer">\
+				<div class="col-xs-12">\
+					<textarea id="description" class="form-control input-sm" rows="3" placeholder="Description"></textarea>\
+				</div>\
+			</div>\
+			<div class="row mytopbuffer">\
+				<div class="col-xs-12">\
+					<button class="btn btn-primary btn-sm" style="width:100%" onclick="initialEvent()">Create</button>\
+				</div>\
+			</div>\
+		</div>';
+	$("#sidecontent").html(createPageHtml);
+	$("#headertext").html("New Event");
+	$("#headerbtn").addClass("sr-only");
+	$("#backbtn").removeClass("sr-only");
+	$("#backbtn").attr("onclick","backToMine()");
+	
+	//$("#createbox").outerHeight($("#maincontent").outerHeight()-32);
+	$('#pubfriswitch').bootstrapSwitch('size', 'small');
+	$('#pubfriswitch').bootstrapSwitch('onText', 'To Friends');
+	$('#pubfriswitch').bootstrapSwitch('offText', 'To Public');
+	
+	$("#sidecontent").css("left","0");
+	onloadLocationPicker();
+}
+
+function addCapacity(){
+	var tempValue = Number($("#capacityValue").html());
+	$("#capacityValue").html(tempValue + 1);
+}
+
+function minusCapacity(){
+	var tempValue = Number($("#capacityValue").html());
+	$("#capacityValue").html(tempValue - 1);
+}
+
+function initialEvent(){
+	var userId = window.localStorage.getItem("userId");
+	
+	var toSwitch = $("#pubfriswitch").bootstrapSwitch('state');
+	
+	var publish = "public";
+	
+	if(toSwitch){
+		publish = "friend"
+	}else{
+		publish = "public"
+	}
+	
+	var eventTitle = $("#eventtitle").val();
+	var category = $("#category").val();
+	var duration = $("#duration").val();
+	var capacityValue = $("#capacityValue").html();
+	var description = $("#description").val();
+	var coordinate = $("#coordinate").val();
+	var startTime = new Date();
+	var image = OrgImgURL;
+	
+	if(image.length == 0){
+		switch(category){
+			case "Clothes":
+				image = "img/tagimg/cloth.png";
+				break;
+			case "Beauty":
+				image = "img/tagimg/beauty.png";
+				break;
+			case "Glasses":
+				image = "img/tagimg/glass.png";
+				break;
+			case "Sports":
+				image = "img/tagimg/sport.png";
+				break;
+			case "Entertainments":
+				image = "img/tagimg/entainment.png";
+				break;
+			case "Electronics":
+				image = "img/tagimg/electronic.png";
+				break;
+			case "Healthy Care":
+				image = "img/tagimg/healthy.png";
+				break;
+			case "Kitchen":
+				image = "img/tagimg/kitchen.png";
+				break;
+			case "Other":
+				image = "img/tagimg/other.png";
+				break;
+			default:
+				image = "img/tagimg/other.png";
+		}
+	}
+	
+	startTime = startTime.toJSON().toString().split(".")[0];
+	
+	if(eventTitle.length==0||category.length==0||duration.length==0||description.length==0||coordinate.length==0){
+		alert("please do not leave blanks:)");
+	}else{
+		var createInput = '{"title":"'+eventTitle+'","description":"'+description+'","startTime":"'+startTime+'","duration":"'+duration+'","tag":"'+category+'","peopleLimit":"'+capacityValue+'","location":"'+coordinate+'","organizer":"'+userId+'","publish":"'+publish+'","image":"'+image+'"}';
+		
+		$.ajax({
+			url: '/ShopperWeb/CreateEventServlet?json='+createInput,
+			type: 'POST',
+			dataType: 'json',
+			error: function(err){
+				alert("initial event ajax error!");
+			},
+			success: function(data){
+				console.log(data);
+				var status = data["status"];
+				var message = data["message"];
+				if(status == 0){
+					alert(message);
+				}else{
+					backToMine();
+				}
+			}
+		});
+	}
+}
+
+function launchEventDetail(id){
+	var inputJson = '{"eventId":"'+id+'"}';
+	$(document).ready(function(){
+		$.ajax({
+			url: '/ShopperWeb/GetEventServlet?json='+inputJson,
+			type: 'POST',
+			dataType: 'json',
+			error: function(err){
+				alert("get event ajax error!");
+			},
+			success: function(data){
+				console.log(data);
+				var status = data["status"];
+				var message = data["message"];
+				if(status == 0){
+					alert(message);
+				}else{
+					var eventObj = message;
+					var eDescription = eventObj["description"];
+					var eDuration = eventObj["duration"];
+					var eEventId = eventObj["eventId"];
+					var eImage = eventObj["image"];
+					var eLocation = eventObj["location"];
+					var eOrganizer = eventObj["organizer"];
+					var eParticipants = eventObj["participates"];
+					var ePeopleLimit = eventObj["peopleLimit"];
+					var ePublish = eventObj["publish"];
+					var eStartTime = eventObj["startTime"];
+					var eTag = eventObj["tag"];
+					var eTitle = eventObj["title"];
+					
+					var numOfPart = 0;
+					if(eParticipants.length == 1){
+						numOfPart = 1;
+					}else{
+						numOfPart = (eParticipants.split(",")).length;
+					}
+					
+					var eventPageHtml = '\
+						<div class="container">\
+							<div class="row">\
+								<div class="col-xs-12">\
+									<div class="thumbnail">\
+										<img src="'+eImage+'" class="img-rounded" onclick="imgExpend()" id="eventDetailImg">\
+									</div>\
+								</div>\
+							</div>\
+							<div class="row">\
+								<div class="col-xs-12">\
+									<div class="thumbnail">\
+										<div class="row">\
+											<div class="col-xs-12">\
+												<font size="2" id="descriptionLabel">'+eDescription+'</font>\
+												<textarea id="descriptionEdit" class="form-control input-sm sr-only" rows="3"></textarea>\
+											</div>\
+										</div>\
+										<div class="row mytopbuffer">\
+											<div class="col-xs-5"><font size="2"><b>Ends in:</b></font></div>\
+											<div class="col-xs-7" id="editTime">\
+												<font id="editDurationLabel" size="2">'+eDuration+' min</font>\
+												<select id="durationEdit" class="form-control input-sm sr-only">\
+													<option value=0>Duration</option>\
+													<option value=5>5 min</option>\
+													<option value=10>10 min</option>\
+													<option value=15>15 min</option>\
+													<option value=20>20 min</option>\
+													<option value=25>25 min</option>\
+													<option value=30>30 min</option>\
+													<option value=40>40 min</option>\
+													<option value=50>50 min</option>\
+													<option value=60>1 hr</option>\
+													<option value=90>1 hr 30 min</option>\
+													<option value=120>2 hr</option>\
+													<option value=150>2 hr 30 min</option>\
+													<option value=180>3 hr</option>\
+													<option value=210>3 hr 30 min</option>\
+													<option value=240>4 hr</option>\
+													<option value=300>5 hr</option>\
+													<option value=360>6 hr</option>\
+												</select>\
+											</div>\
+										</div>\
+										<div class="row mytopbuffer">\
+											<div class="col-xs-5"><font size="2"><b>Category:</b></font></div>\
+											<div class="col-xs-7" id="editTag">\
+												<font id="editTagLabel" size="2">'+eTag+'</font>\
+												<select id="categoryEdit" class="form-control input-sm sr-only">\
+													<option value="null">Category</option>\
+													<option value="Clothes">Clothes</option>\
+													<option value="Beauty">Beauty</option>\
+													<option value="Glasses">Glasses</option>\
+													<option value="Sports">Sports</option>\
+													<option value="Entertainments">Entertainments</option>\
+													<option value="Electronics">Electronics</option>\
+													<option value="Healthy Care">Healthy Care</option>\
+													<option value="Kitchen">Kitchen</option>\
+													<option value="Other">Other</option>\
+												</select>\
+											</div>\
+										</div>\
+										<div class="row mytopbuffer">\
+											<div class="col-xs-5">\
+												<font size="2" id="capaLabel"><b>Participants:</b></font>\
+											</div>\
+											<div class="col-xs-7">\
+												<span id="capaContent1"><font size="2">'+numOfPart+' / '+ePeopleLimit+' Join</font></span>\
+												<span id="capaContent2"><button class="btn btn-info btn-xs" onclick="viewParticipants('+eEventId+')">View</button></span>\
+											</div>\
+											<div class="col-xs-12">\
+												<div id="capacityEdit" class="row sr-only">\
+													<div class="col-xs-3">\
+														<font size="5"><span onclick="minusCapacityEdit()" class="glyphicon glyphicon-minus pull-right byqcontrol"></span></font>\
+													</div>\
+													<div class="col-xs-6">\
+														<font size="4"><strong id="capacityValueEdit">3</strong></font><font size="2">&nbsp;&nbsp;&nbsp;<em>participants</em></font>\
+													</div>\
+													<div class="col-xs-3">\
+														<font size="5"><span onclick="addCapacityEdit()" class="glyphicon glyphicon-plus byqcontrol"></span></font>\
+													</div>\
+												</div>\
+											</div>\
+										</div>\
+									</div>\
+								</div>\
+							</div>\
+							<div class="row mytopbuffer">\
+								<div class="col-xs-12">\
+									<button id="editBtn" class="btn btn-default btn-xs" style="width:100%" onclick="launchEdit()"><span class="glyphicon glyphicon-edit"></span> Edit</button>\
+									<button id="updateBtn" class="btn btn-primary btn-xs sr-only" style="width:100%" onclick="confirmUpdate('+eEventId+')">Update</button>\
+									<button id="cancelBtn" class="btn btn-danger btn-xs mytopbuffer" style="width:100%" onclick="cancelEvent('+eEventId+')">Cancel Event</button>\
+								</div>\
+							</div>\
+							<div class="row mytopbuffer">\
+								<div class="col-xs-12">\
+									<div class="item rounded dark" style="padding: 3px;">\
+										<div id="map_canvas" class="map rounded" style="height:140px;"></div>\
+									</div>\
+								</div>\
+							</div>\
+							<div class="row">\
+								<div class="col-xs-12">\
+									<div class="thumbnail" id="chatBox">\
+										<div class="row">\
+											<div class="col-xs-3 col-sm-2"><img src="img/photo0'+id+'.png" class="img-responsive img-rounded myimg"></div>\
+											<div class="col-xs-9 col-sm-10">\
+												<div class="row mynegtop"><font size="1"><strong>Where should I meet you?</strong></font></div>\
+												<div class="row mynegtop"><font size="1"><small>Bie Yaqing <em>1 mins ago</em></small></font></div>\
+											</div>\
+										</div>\
+									</div>\
+									<div class="thumbnail">\
+										<div class="row">\
+											<div class="col-xs-9 col-sm-10"><input type="text" class="form-control input-sm"></div>\
+											<div class="col-xs-3 col-sm-2 myleftpadding"><button class="btn btn-primary btn-sm">Post</button></div>\
+										</div>\
+									</div>\
+								</div>\
+							</div>\
+						</div>';
+					
+					$("#sidecontent").html(eventPageHtml);
+					
+					$("#descriptionEdit").val(eDescription);
+					$("#durationEdit").val(eDuration);
+					$("#categoryEdit").val(eTag);
+					$("#capacityValueEdit").html(ePeopleLimit);
+					
+					$("#headertext").html(eTitle);
+					$("#headerbtn").addClass("sr-only");
+					$("#backbtn").removeClass("sr-only");
+					$("#backbtn").attr("onclick","backToMine()");
+					VIEWINGEVENT = eEventId;
+					
+					//$("#createbox").outerHeight($("#maincontent").outerHeight()-32);
+					
+					$("#sidecontent").css("left","0");
+					$('#map_canvas').gmap().bind('init', function(ev, map) {
+						$('#map_canvas').gmap('addMarker', {'position': eLocation, 'zoom': 10, 'disableDefaultUI':true, 'bounds': true}).click(function() {
+							$('#map_canvas').gmap('openInfoWindow', {'content': 'Location is here!'}, this);
+						});
+					});
+				}
+			}
+		});
+	});
+}
+
+function updateEvent(){
+	// success
+	closeEditCapa();
+	$("#updateBtn").addClass("sr-only");
+	//$("#cancelBtn").removeClass("sr-only");
+}
+
+function launchEventDetailForView(id){
+	var inputJson = '{"eventId":"'+id+'"}';
+	$(document).ready(function(){
+		$.ajax({
+			url: '/ShopperWeb/GetEventServlet?json='+inputJson,
+			type: 'POST',
+			dataType: 'json',
+			error: function(err){
+				alert("get event ajax error!");
+			},
+			success: function(data){
+				console.log(data);
+				var status = data["status"];
+				var message = data["message"];
+				if(status == 0){
+					alert(message);
+				}else{
+					var eventObj = message;
+					var eDescription = eventObj["description"];
+					var eDuration = eventObj["duration"];
+					var eEventId = eventObj["eventId"];
+					var eImage = eventObj["image"];
+					var eLocation = eventObj["location"];
+					var eOrganizer = eventObj["organizer"];
+					var eParticipants = eventObj["participates"];
+					var ePeopleLimit = eventObj["peopleLimit"];
+					var ePublish = eventObj["publish"];
+					var eStartTime = eventObj["startTime"];
+					var eTag = eventObj["tag"];
+					var eTitle = eventObj["title"];
+					
+					var numOfPart = 0;
+					if(eParticipants.length == 1){
+						numOfPart = 1;
+					}else{
+						numOfPart = (eParticipants.split(",")).length;
+					}
+					
+					var eventPageHtml = '\
+						<div class="container">\
+							<div class="row">\
+								<div class="col-xs-12">\
+									<div class="thumbnail">\
+										<img src="'+eImage+'" class="img-rounded" onclick="imgExpend()" id="eventDetailImg">\
+									</div>\
+								</div>\
+							</div>\
+							<div class="row">\
+								<div class="col-xs-12">\
+									<div class="thumbnail">\
+										<div class="row">\
+											<div class="col-xs-12">\
+												<font size="2">'+eDescription+'</font>\
+											</div>\
+										</div>\
+										<div class="row mytopbuffer">\
+											<div class="col-xs-5"><font size="2"><b>Ends in:</b></font></div>\
+											<div class="col-xs-7" id="tag">\
+												<font id="durationLabel" size="2">'+eDuration+' min</font>\
+											</div>\
+										</div>\
+										<div class="row">\
+											<div class="col-xs-5"><font size="2"><b>Category:</b></font></div>\
+											<div class="col-xs-7" id="tag">\
+												<font id="tagLabel" size="2">'+eTag+'</font>\
+											</div>\
+										</div>\
+										<div class="row">\
+											<div class="col-xs-5" id="editTime">\
+												<font size="2"><b>Participants:</b></font>\
+											</div>\
+											<div class="col-xs-7">\
+												<span><font size="2">'+numOfPart+' / '+ePeopleLimit+' Join</font></span>\
+												<span><button class="btn btn-info btn-xs" onclick="viewParticipants('+id+')">View</button></span>\
+											</div>\
+										</div>\
+									</div>\
+								</div>\
+							</div>\
+							<div class="row mytopbuffer">\
+								<div class="col-xs-12">\
+									<div class="item rounded dark" style="padding: 3px;">\
+										<div id="map_canvas" class="map rounded" style="height:140px;"></div>\
+									</div>\
+								</div>\
+							</div>\
+							<div class="row">\
+								<div class="col-xs-12">\
+									<div class="thumbnail" id="chatBox">\
+										<div class="row">\
+											<div class="col-xs-3 col-sm-2"><img src="img/photo0'+id+'.png" class="img-responsive img-rounded myimg"></div>\
+											<div class="col-xs-9 col-sm-10">\
+												<div class="row mynegtop"><font size="1"><strong>Where should I meet you?</strong></font></div>\
+												<div class="row mynegtop"><font size="1"><small>Bie Yaqing <em>1 mins ago</em></small></font></div>\
+											</div>\
+										</div>\
+									</div>\
+									<div class="thumbnail">\
+										<div class="row">\
+											<div class="col-xs-9 col-sm-10"><input type="text" class="form-control input-sm"></div>\
+											<div class="col-xs-3 col-sm-2 myleftpadding"><button class="btn btn-primary btn-sm">Post</button></div>\
+										</div>\
+									</div>\
+								</div>\
+							</div>\
+						</div>';
+					$("#sidecontent").html(eventPageHtml);
+					$("#headertext").html(eTitle);
+					$("#headerbtn").addClass("sr-only");
+					$("#backbtn").removeClass("sr-only");
+					$("#backbtn").attr("onclick","backToMine()");
+					
+					//$("#createbox").outerHeight($("#maincontent").outerHeight()-32);
+					
+					$("#sidecontent").css("left","0");
+					$('#map_canvas').gmap().bind('init', function(ev, map) {
+						$('#map_canvas').gmap('addMarker', {'position': eLocation,'bounds': true}).click(function() {
+							$('#map_canvas').gmap('openInfoWindow', {'content': 'Location is here!'}, this);
+						});
+					});
+				}
+			}
+		});
+	});
+}
+
+var imgExpInx = 0;
+function imgExpend(){
+	if(imgExpInx % 2 == 0){
+		$("#eventDetailImg").css("height", "140px");
+	}else{
+		$("#eventDetailImg").css("height", "40px");
+	}
+	imgExpInx += 1;
+}
+
+function launchEdit(){
+	launchEditTag();
+	launchEditDesc();
+	launchEditDuration();
+	launchEditCapa();
+	$("#editBtn").addClass("sr-only");
+	$("#updateBtn").removeClass("sr-only");
+}
+
+function confirmUpdate(id){
+	$(document).ready(function(){
+		var organizer = window.localStorage.getItem("userId");
+		var edDescription = $("#descriptionEdit").val();
+		var edDuration = $("#durationEdit").val();
+		var edCategory = $("#categoryEdit").val();
+		var edCapacity = $("#capacityValueEdit").html();
+		var startTime = new Date();
+		startTime = startTime.toJSON().toString().split(".")[0];
+		
+		var updateJson = '{"eventId":"'+id+'","organizer":"'+organizer+'","description":"'+edDescription+'","startTime":"'+startTime+'","duration":"'+edDuration+'","tag":"'+edCategory+'","peopleLimit":"'+edCapacity+'"}';
+		
+		$.ajax({
+			url: '/ShopperWeb/UpdateEventServlet?json='+updateJson,
+			type: 'POST',
+			dataType: 'json',
+			error: function(err){
+				alert("update event ajax error!");
+			},
+			success: function(data){
+				var status = data["status"];
+				var message = data["message"];
+				if(status == 0){
+					alert(message);
+				}else{
+					closeEditTag();
+					closeEditDesc();
+					closeEditDuration();
+					closeEditCapa();
+					$("#updateBtn").addClass("sr-only");
+					$("#editBtn").removeClass("sr-only");
+					
+					launchEventDetail(id);
+				}
+			}
+		});
+	});
+}
+
+function launchEditTag(){
+	$("#editTagLabel").addClass("sr-only");
+	$("#categoryEdit").removeClass("sr-only");
+}
+
+function closeEditTag(){
+	$("#editTagLabel").removeClass("sr-only");
+	$("#categoryEdit").addClass("sr-only");
+}
+
+function launchEditDesc(){
+	$("#descriptionLabel").addClass("sr-only");
+	$("#descriptionEdit").removeClass("sr-only");
+	
+}
+
+function closeEditDesc(){
+	$("#descriptionLabel").removeClass("sr-only");
+	$("#descriptionEdit").addClass("sr-only");
+}
+
+function launchEditDuration(){
+	$("#editDurationLabel").addClass("sr-only");
+	$("#durationEdit").removeClass("sr-only");
+}
+
+function closeEditDuration(){
+	$("#editDurationLabel").removeClass("sr-only");
+	$("#durationEdit").addClass("sr-only");
+}
+
+function launchEditCapa(){
+	$("#capaLabel").addClass("sr-only");
+	$("#capaContent1").addClass("sr-only");
+	$("#capaContent2").addClass("sr-only");
+	$("#capacityEdit").removeClass("sr-only");
+}
+
+function closeEditCapa(){
+	$("#capaLabel").removeClass("sr-only");
+	$("#capaContent1").removeClass("sr-only");
+	$("#capaContent2").removeClass("sr-only");
+	$("#capacityEdit").addClass("sr-only");
+}
+
+function addCapacityEdit(){
+	$("#updateBtn").removeClass("sr-only");
+	var tempValue = Number($("#capacityValueEdit").html());
+	$("#capacityValueEdit").html(tempValue + 1);
+}
+
+function minusCapacityEdit(){
+	$("#updateBtn").removeClass("sr-only");
+	var tempValue = Number($("#capacityValueEdit").html());
+	$("#capacityValueEdit").html(tempValue - 1);
+}
+
+function backToMine(){
+	$("#sidecontent").css("left","100%");
+	$("#headertext").html("Mine");
+	$("#backbtn").addClass("sr-only");
+	$("#headerbtn").removeClass("sr-only");
+	uiMainContentHtml("mine");
+}
+
+function cancelEvent(id){
+	var r = confirm("Are you sure cancel this event?");
+	if(r == true){
+		var cancelJson = '{"eventId":"'+id+'"}';
+		$(document).ready(function(){
+			$.ajax({
+				url: '/ShopperWeb/CancelEventServlet?json='+cancelJson,
+				type: 'POST',
+				dataType: 'json',
+				error: function(err){
+					alert("cancel event ajax error!");
+				},
+				success: function(data){
+					console.log(data);
+					var status = data["status"];
+					var message = data["message"];
+					if(status == 0){
+						alert(message);
+					}else{
+						//success
+						backToMine();
+					}
+				}
+			});
+		});
+	}else{
+		
+	}
+}

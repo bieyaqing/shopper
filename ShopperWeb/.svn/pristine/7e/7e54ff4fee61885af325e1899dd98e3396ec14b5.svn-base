@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-3-5 16:20:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class name="Event" table="EVENT">
+  <id name="eventId" type="long">
+   <column name="EVENTID"/>
+   <generator class="increment"/>
+  </id>
+  <property generated="never" lazy="false" name="description" type="java.lang.String">
+   <column name="DESCRIPTION"/>
+  </property>
+  <property generated="never" lazy="false" name="startTime" type="java.util.Calendar">
+   <column name="STARTTIME"/>
+  </property>
+  <property generated="never" lazy="false" name="duration" type="java.util.Calendar">
+   <column name="DURATION"/>
+  </property>
+  <property generated="never" lazy="false" name="tag" type="java.lang.String">
+   <column name="TAG"/>
+  </property>
+  <property generated="never" lazy="false" name="peopleLimit" type="int">
+   <column name="PEOPLELIMIT"/>
+  </property>
+  <property generated="never" lazy="false" name="location" type="java.lang.String">
+   <column name="LOCATION"/>
+  </property>
+  <property generated="never" lazy="false" name="participates" type="java.lang.String">
+   <column name="PARTICIPATES"/>
+  </property>
+  <property generated="never" lazy="false" name="organizer" type="long">
+   <column name="ORGANIZER"/>
+  </property>
+ </class>
+</hibernate-mapping>

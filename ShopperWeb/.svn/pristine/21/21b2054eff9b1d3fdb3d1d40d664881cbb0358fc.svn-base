@@ -1,0 +1,89 @@
+.thumbnail,.form-group{
+	margin-bottom: 0;
+}
+
+.bootstrap-switch.bootstrap-switch-small{
+	width: 100%;
+}
+
+.mytopbuffer{
+	margin-top: 16px;
+}
+
+.myleftpadding{
+	padding-left: 0;
+}
+
+.myrightpadding{
+	padding-right: 0;
+}
+
+.myzerotop{
+	margin-top: 0;
+}
+
+.mynegtop{
+	margin-top: -5px;
+}
+
+.partVsCap{
+	font-size: 90%;
+	background-image: url('img/devidSign.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100% 100%;
+}
+
+.myimg{
+	max-width: 40px;
+	max-height: 40px;
+}
+
+.mybigimg{
+	max-width: 60px;
+	max-height: 60px;
+}
+
+.crown{
+	background-image: url('img/Crown.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 100% 100%;
+	height: 40px;
+	width: 40px;
+}
+
+.settingfont{
+	font-size: 9px;
+}
+
+.byqcontrol{
+	color: #999999;
+	cursor: pointer;
+}
+
+.lp-container{
+	z-index: 1000;
+	width: 250px;
+}
+
+#sidecontent, #sidecontent2, #sidecontent3{
+	position: fixed;
+	background-color: #f2f2f2;
+	width: 100%;
+	left: 100%;
+	transition: left 0.4s;
+	-webkit-transition: left 0.4s; /* Safari */
+}
+
+#createeventbox, #joineventbox, #friendeventbox, #publiceventbox, #friendbox, #settingbox{
+	overflow:auto;
+	transition: height 0.2s;
+	-webkit-transition: height 0.2s; /* Safari */
+}
+
+#eventDetailImg, #userProfileImg{
+	height: 40px;
+	transition: height 0.4s;
+	-webkit-transition: height 0.4s;
+}

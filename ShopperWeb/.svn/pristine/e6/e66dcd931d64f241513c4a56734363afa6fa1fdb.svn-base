@@ -1,0 +1,105 @@
+package shopper;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+public class UserController {
+
+	public static JSONObject createUser(JSONObject inputJson) {
+		JSONObject json = new JSONObject();
+		try {
+			String username=(String)inputJson.get("username");
+			String password=(String)inputJson.get("password");
+			
+			User u=new User(username, password);
+			UserManager.addUser(u);
+			
+			json.put("status", "1");
+			json.put("message","user created successfully");
+			json.put("user", u.toJson());
+		}catch(Exception e){
+			e.printStackTrace();
+			json.put("status","0");
+			json.put("message",e.toString());
+		}
+		return json;
+	}
+	
+	public static JSONObject updateUser(JSONObject inputJson){
+		JSONObject outputJson = new JSONObject();
+		
+		try {
+			long userId=Long.parseLong((String)inputJson.get("userId"));
+			User u = UserManager.getUserById(userId);
+			
+			String username=(String)inputJson.get("username");
+			u.setUsername(username);
+			String password=(String)inputJson.get("password");
+			u.setPassword(password);
+			String phone=(String)inputJson.get("phone");
+			u.setPhone(phone);
+			String email=(String)inputJson.get("email");
+			u.setEmail(email);
+			String country=(String)inputJson.get("country");
+			u.setCountry(country);
+			String interests=(String)inputJson.get("interest");
+			u.setInterests(interests);
+			String photo=(String)inputJson.get("photo");
+			u.setPhoto(photo);
+			
+			UserManager.modifyUser(u);
+			
+			outputJson.put("status", "0");
+			outputJson.put("message", "user updated successfully");
+			outputJson.put("user", u.toJson());
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			outputJson.put("status", "0");
+			outputJson.put("message", e.toString());
+		}
+		return outputJson;
+	}
+
+	public static JSONObject getUserById(JSONObject inputJson) {
+		JSONObject json = new JSONObject();
+		try {
+			long userId=Long.parseLong((String)inputJson.get("userId"));
+			User u=UserManager.getUserById(userId);
+			
+			json.put("status", "1");
+			json.put("message","get user successfully");
+			json.put("user", u.toJson());
+		}catch(Exception e){
+			e.printStackTrace();
+			json.put("status","0");
+			json.put("message",e.toString());
+		}
+		return json;
+	}
+
+	public static JSONObject getMyFriends(JSONObject inputJson) {
+		JSONObject json=new JSONObject();
+		JSONArray myFriends=new JSONArray();
+		try {
+			String friends=(String)inputJson.get("friends");
+			String[] arr=friends.split(",");
+			
+			for (int i=0; i<arr.length; i++){
+				long uid=Long.parseLong(arr[i]);
+				User u=UserManager.getUserById(uid);
+				myFriends.add(u.toJson());
+			}
+			
+			json.put("status", "1");
+			json.put("message","get friends successfully");
+			json.put("myFriends", myFriends);
+		}catch(Exception e){
+			e.printStackTrace();
+			json.put("status","0");
+			json.put("message",e.toString());
+		}
+		return json;
+	}
+
+}

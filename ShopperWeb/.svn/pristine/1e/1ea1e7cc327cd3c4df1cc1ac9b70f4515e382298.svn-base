@@ -1,0 +1,58 @@
+function login(){
+	$(document).ready(function(){
+		
+		
+//		$.ajax({
+//		url: '',
+//		type: 'POST',
+//		dataType: 'json',
+//		error: function(err){
+//			alert("mine error!");
+//		},
+//		success: function(data){
+//			
+//		}
+//	});
+		
+		//success
+		$(".tagBtn").attr("disabled", false);
+		$("#headertext").html("Mine");
+		uiMainContentHtml("mine");
+	});
+}
+
+function signup(){
+	$(document).ready(function(){
+		var username = S("#susername").val();
+		var password1 = $("#spassword1").val();
+		var password2 = $("#spassword2").val();
+		
+		if(username.length == 0||password1.length == 0||password2.length == 0){
+			alert("No empty input please:)");
+		}else if(password1 != password2){
+			alert("Confirm your password again:)");
+		}else{
+			var signupJson = '{"username":"'+username+'","password":"'+password1+'"}';
+			
+			$.ajax({
+				url: '/Shopper/CreateUserServlet?json='+signupJson,
+				type: 'POST',
+				dataType: 'json',
+				error: function(err){
+					alert("signup ajax error");
+				},
+				success: function(data){
+					console.log(data);
+					$(".tagBtn").attr("disabled", false);
+					$("#headertext").html("Mine");
+					uiMainContentHtml("mine");
+				}
+			});
+		}
+	});
+}
+
+function logout(){
+	window.localStorage.removeItem("userId");
+	initialApp();
+}
