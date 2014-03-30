@@ -70,6 +70,11 @@ function signup(){
 }
 
 function logout(){
-	window.localStorage.removeItem("userId");
-	initialApp();
+	var r = confirm("Confirm Logout?");
+	if(r){
+		window.localStorage.removeItem("userId");
+		initialApp();
+	}else{
+		
+	}
 }

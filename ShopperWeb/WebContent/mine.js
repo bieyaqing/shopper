@@ -94,8 +94,9 @@ function launchCreateEvent(){
 	var createPageHtml = '\
 		<div class="container">\
 			<div class="row">\
-				<div class="col-xs-12">\
-					<input id="pubfriswitch" data-label-text="Publish" type="checkbox">\
+				<div class="col-xs-5"><font size="2"><b>Publish to:</b></font></div>\
+				<div class="col-xs-7">\
+					<input id="pubfriswitch" type="checkbox">\
 				</div>\
 			</div>\
 			<div class="row mytopbuffer">\
@@ -167,8 +168,11 @@ function launchCreateEvent(){
 				</div>\
 			</div>\
 			<div class="row mytopbuffer myLocationPicker">\
-				<div class="col-xs-12">\
-					<input id="coordinate" type="text" class="form-control input-sm latlng" placeholder="Location">\
+				<div class="col-xs-3">\
+					<font size="2"><b>Location:</b></font>\
+				</div>\
+				<div class="col-xs-9">\
+					<input id="coordinate" type="text" class="btn btn-default btn-sm latlng" placeholder="Click">\
 				</div>\
 			</div>\
 			<div class="row mytopbuffer">\
@@ -191,8 +195,8 @@ function launchCreateEvent(){
 	
 	//$("#createbox").outerHeight($("#maincontent").outerHeight()-32);
 	$('#pubfriswitch').bootstrapSwitch('size', 'small');
-	$('#pubfriswitch').bootstrapSwitch('onText', 'To Friends');
-	$('#pubfriswitch').bootstrapSwitch('offText', 'To Public');
+	$('#pubfriswitch').bootstrapSwitch('onText', 'Friends');
+	$('#pubfriswitch').bootstrapSwitch('offText', 'Public');
 	
 	$("#sidecontent").css("left","0");
 	onloadLocationPicker();
@@ -209,86 +213,92 @@ function minusCapacity(){
 }
 
 function initialEvent(){
-	var userId = window.localStorage.getItem("userId");
+	var r = confirm("Confirm create this event?");
 	
-	var toSwitch = $("#pubfriswitch").bootstrapSwitch('state');
-	
-	var publish = "public";
-	
-	if(toSwitch){
-		publish = "friend"
-	}else{
-		publish = "public"
-	}
-	
-	var eventTitle = $("#eventtitle").val();
-	var category = $("#category").val();
-	var duration = $("#duration").val();
-	var capacityValue = $("#capacityValue").html();
-	var description = $("#description").val();
-	var coordinate = $("#coordinate").val();
-	var startTime = new Date();
-	var image = OrgImgURL;
-	
-	if(image.length == 0){
-		switch(category){
-			case "Clothes":
-				image = "img/tagimg/cloth.png";
-				break;
-			case "Beauty":
-				image = "img/tagimg/beauty.png";
-				break;
-			case "Glasses":
-				image = "img/tagimg/glass.png";
-				break;
-			case "Sports":
-				image = "img/tagimg/sport.png";
-				break;
-			case "Entertainments":
-				image = "img/tagimg/entainment.png";
-				break;
-			case "Electronics":
-				image = "img/tagimg/electronic.png";
-				break;
-			case "Healthy Care":
-				image = "img/tagimg/healthy.png";
-				break;
-			case "Kitchen":
-				image = "img/tagimg/kitchen.png";
-				break;
-			case "Other":
-				image = "img/tagimg/other.png";
-				break;
-			default:
-				image = "img/tagimg/other.png";
+	if(r){
+		var userId = window.localStorage.getItem("userId");
+		
+		var toSwitch = $("#pubfriswitch").bootstrapSwitch('state');
+		
+		var publish = "public";
+		
+		if(toSwitch){
+			publish = "friend"
+		}else{
+			publish = "public"
 		}
-	}
-	
-	startTime = startTime.toJSON().toString().split(".")[0];
-	
-	if(eventTitle.length==0||category.length==0||duration.length==0||description.length==0||coordinate.length==0){
-		alert("please do not leave blanks:)");
-	}else{
-		var createInput = '{"title":"'+eventTitle+'","description":"'+description+'","startTime":"'+startTime+'","duration":"'+duration+'","tag":"'+category+'","peopleLimit":"'+capacityValue+'","location":"'+coordinate+'","organizer":"'+userId+'","publish":"'+publish+'","image":"'+image+'"}';
-		createInput = encodeURIComponent(createInput);
-		$.ajax({
-			url: '/ShopperWeb/CreateEventServlet?json='+createInput,
-			type: 'POST',
-			dataType: 'json',
-			error: function(err){
-				alert("initial event ajax error!");
-			},
-			success: function(data){
-				console.log(data);
-				var status = data["status"];
-				var message = data["message"];
-				if(status == 0){
-					alert(message);
-				}else{
-					backToMine();
-				}
+		
+		var eventTitle = $("#eventtitle").val();
+		var category = $("#category").val();
+		var duration = $("#duration").val();
+		var capacityValue = $("#capacityValue").html();
+		var description = $("#description").val();
+		var coordinate = $("#coordinate").val();
+		var startTime = new Date();
+		var image = OrgImgURL;
+		
+		if(image.length == 0){
+			switch(category){
+				case "Clothes":
+					image = "img/tagimg/cloth.png";
+					break;
+				case "Beauty":
+					image = "img/tagimg/beauty.png";
+					break;
+				case "Glasses":
+					image = "img/tagimg/glass.png";
+					break;
+				case "Sports":
+					image = "img/tagimg/sport.png";
+					break;
+				case "Entertainments":
+					image = "img/tagimg/entainment.png";
+					break;
+				case "Electronics":
+					image = "img/tagimg/electronic.png";
+					break;
+				case "Healthy Care":
+					image = "img/tagimg/healthy.png";
+					break;
+				case "Kitchen":
+					image = "img/tagimg/kitchen.png";
+					break;
+				case "Other":
+					image = "img/tagimg/other.png";
+					break;
+				default:
+					image = "img/tagimg/other.png";
 			}
-		});
+		}
+		
+		startTime = startTime.toJSON().toString().split(".")[0];
+	
+		if(eventTitle.length==0||category.length==0||duration.length==0||description.length==0||coordinate.length==0){
+			alert("please do not leave blanks:)");
+		}else{
+			var createInput = '{"title":"'+eventTitle+'","description":"'+description+'","startTime":"'+startTime+'","duration":"'+duration+'","tag":"'+category+'","peopleLimit":"'+capacityValue+'","location":"'+coordinate+'","organizer":"'+userId+'","publish":"'+publish+'","image":"'+image+'"}';
+			createInput = encodeURIComponent(createInput);
+			$.ajax({
+				url: '/ShopperWeb/CreateEventServlet?json='+createInput,
+				type: 'POST',
+				dataType: 'json',
+				error: function(err){
+					alert("initial event ajax error!");
+				},
+				success: function(data){
+					console.log(data);
+					var status = data["status"];
+					var message = data["message"];
+					if(status == 0){
+						alert(message);
+					}else{
+						backToMine();
+					}
+				}
+			});
+		}
+	}else{
+		
 	}
 }
 
@@ -314,7 +324,12 @@ function launchEventDetail(id){
 					var eDuration = eventObj["duration"];
 					var eEventId = eventObj["eventId"];
 					var eImage = eventObj["image"];
+					
 					var eLocation = eventObj["location"];
+					
+					var eCor = eLocation.split(":")[0];
+					var eAddress = eLocation.split(":")[1];
+					
 					var eOrganizer = eventObj["organizer"];
 					var eParticipants = eventObj["participates"];
 					var ePeopleLimit = eventObj["peopleLimit"];
@@ -347,7 +362,7 @@ function launchEventDetail(id){
 										<div class="row mynegtop"><font size="1"><small>'+tusername+' <em>'+tduration+' mins ago</em></small></font></div>\
 									</div>\
 								</div>\
-							</div>'
+							</div>';
 					}
 					
 					var eventPageHtml = '\
@@ -417,8 +432,7 @@ function launchEventDetail(id){
 												<font size="2" id="capaLabel"><b>Participants:</b></font>\
 											</div>\
 											<div class="col-xs-7">\
-												<span id="capaContent1"><font size="2">'+numOfPart+' / '+ePeopleLimit+' Joined</font></span>\
-												<span id="capaContent2"><button class="btn btn-info btn-xs" onclick="viewParticipants('+eEventId+')">View</button></span>\
+												<a href="" onclick="viewParticipants('+eEventId+')" id="capaContent1"><font size="2">'+numOfPart+' / '+ePeopleLimit+' Joined</font></a>\
 											</div>\
 											<div class="col-xs-12">\
 												<div id="capacityEdit" class="row sr-only">\
@@ -482,8 +496,8 @@ function launchEventDetail(id){
 					
 					$("#sidecontent").css("left","0");
 					$('#map_canvas').gmap().bind('init', function(ev, map) {
-						$('#map_canvas').gmap('addMarker', {'position': eLocation, 'zoom': 10, 'disableDefaultUI':true, 'bounds': true}).click(function() {
-							$('#map_canvas').gmap('openInfoWindow', {'content': 'Location is here!'}, this);
+						$('#map_canvas').gmap('addMarker', {'position': eCor, 'zoom': 10, 'disableDefaultUI':true, 'bounds': true}).click(function() {
+							$('#map_canvas').gmap('openInfoWindow', {'content': eAddress}, this);
 						});
 					});
 				}
@@ -526,7 +540,12 @@ function launchEventDetailForView(id){
 					var eDuration = eventObj["duration"];
 					var eEventId = eventObj["eventId"];
 					var eImage = eventObj["image"];
+					
 					var eLocation = eventObj["location"];
+					
+					var eCor = eLocation.split(":")[0];
+					var eAddress = eLocation.split(":")[1];
+					
 					var eOrganizer = eventObj["organizer"];
 					var eParticipants = eventObj["participates"];
 					var ePeopleLimit = eventObj["peopleLimit"];
@@ -596,8 +615,7 @@ function launchEventDetailForView(id){
 												<font size="2"><b>Participants:</b></font>\
 											</div>\
 											<div class="col-xs-7">\
-												<span><font size="2">'+numOfPart+' / '+ePeopleLimit+' Joined</font></span>\
-												<span><button class="btn btn-info btn-xs" onclick="viewParticipants('+id+')">View</button></span>\
+												<a href="" onclick="viewParticipants('+id+')"><font size="2">'+numOfPart+' / '+ePeopleLimit+' Joined</font></a>\
 											</div>\
 										</div>\
 									</div>\
@@ -633,8 +651,8 @@ function launchEventDetailForView(id){
 					
 					$("#sidecontent").css("left","0");
 					$('#map_canvas').gmap().bind('init', function(ev, map) {
-						$('#map_canvas').gmap('addMarker', {'position': eLocation,'bounds': true}).click(function() {
-							$('#map_canvas').gmap('openInfoWindow', {'content': 'Location is here!'}, this);
+						$('#map_canvas').gmap('addMarker', {'position': eCor,'bounds': true}).click(function() {
+							$('#map_canvas').gmap('openInfoWindow', {'content': eAddress}, this);
 						});
 					});
 				}

@@ -77,7 +77,12 @@ function viewAndJoinEvent(id){
 					var eDuration = eventObj["duration"];
 					var eEventId = eventObj["eventId"];
 					var eImage = eventObj["image"];
+					
 					var eLocation = eventObj["location"];
+					
+					var eCor = eLocation.split(":")[0];
+					var eAddress = eLocation.split(":")[1];
+					
 					var eOrganizer = eventObj["organizer"];
 					var eParticipants = eventObj["participates"];
 					var ePeopleLimit = eventObj["peopleLimit"];
@@ -147,8 +152,7 @@ function viewAndJoinEvent(id){
 												<font size="2"><b>Participants:</b></font>\
 											</div>\
 											<div class="col-xs-7">\
-												<font size="2">'+numOfPart+' / '+ePeopleLimit+' Joined</font>\
-												<button class="btn btn-info btn-xs" onclick="viewParticipants2('+id+')">View</button>\
+												<a href="" onclick="viewParticipants2('+id+')"><font size="2">'+numOfPart+' / '+ePeopleLimit+' Joined</font></a>\
 											</div>\
 										</div>\
 										<div class="row mytopbuffer">\
@@ -180,8 +184,8 @@ function viewAndJoinEvent(id){
 					
 					$("#sidecontent").css("left","0");
 					$('#map_canvas').gmap().bind('init', function(ev, map) {
-						$('#map_canvas').gmap('addMarker', {'position': eLocation, 'zoom': 10,'disableDefaultUI':true, 'bounds': true}).click(function() {
-							$('#map_canvas').gmap('openInfoWindow', {'content': 'Location is here!'}, this);
+						$('#map_canvas').gmap('addMarker', {'position': eCor, 'zoom': 10,'disableDefaultUI':true, 'bounds': true}).click(function() {
+							$('#map_canvas').gmap('openInfoWindow', {'content': eAddress}, this);
 						});
 					});
 				}
@@ -199,26 +203,31 @@ function backToDiscover(){
 }
 
 function joinEvent(id){
-	$(document).ready(function(){
-		var userId = window.localStorage.getItem("userId");
-		var joinEventJson = '{"userId":"'+userId+'","eventId":"'+id+'"}';
-		$.ajax({
-			url: '/ShopperWeb/JoinEventServlet?json='+joinEventJson,
-			type: 'POST',
-			dataType: 'json',
-			error: function(err){
-				alert("join event ajax error!");
-			},
-			success: function(data){
-				console.log(data);
-				var status = data["status"];
-				var message = data["message"];
-				if(status == 0){
-					alert(message);
-				}else{
-					uiMainContentHtml("mine");
+	var r = confirm("Confirm join this event?");
+	if(r){
+		$(document).ready(function(){
+			var userId = window.localStorage.getItem("userId");
+			var joinEventJson = '{"userId":"'+userId+'","eventId":"'+id+'"}';
+			$.ajax({
+				url: '/ShopperWeb/JoinEventServlet?json='+joinEventJson,
+				type: 'POST',
+				dataType: 'json',
+				error: function(err){
+					alert("join event ajax error!");
+				},
+				success: function(data){
+					console.log(data);
+					var status = data["status"];
+					var message = data["message"];
+					if(status == 0){
+						alert(message);
+					}else{
+						uiMainContentHtml("mine");
+					}
 				}
-			}
+			});
 		});
-	});
+	}else{
+		
+	}
 }

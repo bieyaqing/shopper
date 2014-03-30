@@ -73,6 +73,14 @@
     <url-pattern>/AddFriendServlet</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>RemoveFriendServlet</servlet-name>
+    <servlet-class>servlets.RemoveFriendServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoveFriendServlet</servlet-name>
+    <url-pattern>/RemoveFriendServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>UpdateEventServlet</servlet-name>
     <servlet-class>servlets.UpdateEventServlet</servlet-class>
   </servlet>

@@ -164,7 +164,7 @@ function backToSocial(){
 	$("#helpbtn").removeClass("sr-only");
 }
 
-function viewUserFromMine(id){
+function viewUserFromMine(id, eventId){
 	$(document).ready(function(){
 		var viewUserJson = '{"userId":"'+id+'"}';
 		$.ajax({
@@ -240,9 +240,11 @@ function viewUserFromMine(id){
 					$("#backbtn").removeClass("sr-only");
 					$("#backbtn").attr("onclick","backToMyEventPar()");
 					$("#helpbtn").addClass("sr-only");
-					$("#headerbtn2").removeClass("sr-only");
-					$("#headerbtn2").html('Add');
-					$("#headerbtn2").attr("onclick","addFriendInMyEvent("+id+")");
+					if(eventId != 0){
+						$("#headerbtn2").removeClass("sr-only");
+						$("#headerbtn2").html('Add');
+						$("#headerbtn2").attr("onclick","addFriendInMyEvent("+id+","+eventId+")");
+					}
 				}
 			}
 		});
@@ -374,7 +376,7 @@ function addFriend(){
 	backToSocial();
 }
 
-function addFriendInMyEvent(id){
+function addFriendInMyEvent(id, eventId){
 	$(document).ready(function(){
 		var userId = window.localStorage.getItem("userId");
 		var addFriendJson = '{"userId":"'+userId+'","friendId":"'+id+'"}';
@@ -394,10 +396,43 @@ function addFriendInMyEvent(id){
 					alert(message);
 				}else{
 					backToMyEventPar();
+					viewParticipants(eventId);
 				}
 			}
 		});
 	});
+}
+
+function removeFriend(id){
+	var r = confirm("Are you sure remove this friend?");
+	
+	if(r){
+		$(document).ready(function(){
+			var userId = window.localStorage.getItem("userId");
+			var removeFriendJson = '{"userId":"'+userId+'","friendId":"'+id+'"}';
+			$.ajax({
+				url: '/ShopperWeb/RemoveFriendServlet?json='+removeFriendJson,
+				type: 'POST',
+				dataType: 'json',
+				error: function(err){
+					alert("add friend ajax error!");
+				},
+				success: function(data){
+					console.log(data);
+					var status = data["status"];
+					var message = data["message"];
+					
+					if(status == 0){
+						alert(message);
+					}else{
+						uiMainContentHtml("social");
+					}
+				}
+			});
+		});
+	}else{
+		
+	}
 }
 
 var pImgExpInx = 0;

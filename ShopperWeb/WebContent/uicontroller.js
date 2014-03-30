@@ -109,6 +109,9 @@ function uiMainContentHtml(page){
 								var tempEventId = tempEO["eventId"];
 								var tempImage = tempEO["image"];
 								var tempLocation = tempEO["location"];
+								if(tempLocation.length > 15){
+									tempLocation = tempLocation.substring(0,15) + "...";
+								}
 								var tempOrganizer = tempEO["organizer"];
 								var tempParticipants = tempEO["participates"];
 								var numOfPart = 0;
@@ -182,7 +185,7 @@ function uiMainContentHtml(page){
 												<div class="row mynegtop"><font size="2"><strong>'+tempTitle+'</strong></font></div>\
 												<div class="row mynegtop"><font size="1"><small><em>'+tempDuration+' mins</em>&nbsp;&nbsp;'+tempLocation+'</small></font></div>\
 											</div>\
-											<div class="col-xs-3 col-sm-2 myrightpadding"><div style="padding-top:5px"><font size="2"><strong>'+tempDistance+' km</strong></font></div></div>\
+											<div class="col-xs-3 col-sm-2 myleftpadding myrightpadding"><div style="padding-top:5px"><font size="2"><strong>'+tempDistance+' km</strong></font></div></div>\
 										</div>\
 									</div>';
 							}
@@ -191,7 +194,7 @@ function uiMainContentHtml(page){
 								<div class="container">\
 									<div class="row">\
 										<div class="col-xs-6" id="createeventheader">\
-											<h4 class="myzerotop"><small>My Events</small></h4>\
+											<h4 class="myzerotop"><small style="color:#000000">My Events</small></h4>\
 										</div>\
 										<div class="col-xs-6" id="createeventexp">\
 											<button onclick="expendCreateEvent()" class="btn btn-default btn-xs pull-right"><span id="ceexpBtn" class="glyphicon glyphicon-collapse-down"></span></button>\
@@ -204,7 +207,7 @@ function uiMainContentHtml(page){
 									</div>\
 									<div class="row">\
 										<div class="col-xs-6" id="joineventheader">\
-											<h4><small>Joined Events</small></h4>\
+											<h4><small style="color:#000000">Joined Events</small></h4>\
 										</div>\
 										<div class="col-xs-6" id="joineventexp">\
 											<h4><button onclick="expendJoinEvent()" class="btn btn-default btn-xs pull-right"><span id="jeexpBtn" class="glyphicon glyphicon-collapse-down"></span></button></h4>\
@@ -276,7 +279,7 @@ function uiMainContentHtml(page){
 												<div class="row mynegtop"><font size="2"><strong>'+teTitle+'</strong></font></div>\
 												<div class="row mynegtop"><font size="1"><small><em>'+teDuration+' mins</em>&nbsp;&nbsp;'+teLocation+'</small></font></div>\
 											</div>\
-											<div class="col-xs-3 col-sm-2 myrightpadding"><div style="padding-top:5px"><font size="2"><strong>'+teDistance+' km</strong></font></div></div>\
+											<div class="col-xs-3 col-sm-2 myleftpadding myrightpadding"><div style="padding-top:5px"><font size="2"><strong>'+teDistance+' km</strong></font></div></div>\
 										</div>\
 									</div>';
 							}
@@ -307,7 +310,7 @@ function uiMainContentHtml(page){
 												<div class="row mynegtop"><font size="2"><strong>'+teTitle+'</strong></font></div>\
 												<div class="row mynegtop"><font size="1"><small><em>'+teDuration+' mins</em>&nbsp;&nbsp;'+teLocation+'</small></font></div>\
 											</div>\
-											<div class="col-xs-3 col-sm-2 myrightpadding"><div style="padding-top:5px"><font size="2"><strong>'+teDistance+' km</strong></font></div></div>\
+											<div class="col-xs-3 col-sm-2 myleftpadding myrightpadding"><div style="padding-top:5px"><font size="2"><strong>'+teDistance+' km</strong></font></div></div>\
 										</div>\
 									</div>';
 							}
@@ -395,7 +398,7 @@ function uiMainContentHtml(page){
 											<div class="col-xs-2 col-sm-2" onclick="viewFriend('+fId+')"><img src="'+fPhoto+'" class="img-responsive img-rounded myimg"></div>\
 											<div class="col-xs-3 col-sm-2 myrightpadding" onclick="viewFriend('+fId+')"><div style="padding-top:7px"><font size="4"><span class="glyphicon glyphicon-star"></span><strong>'+fPoint+'</strong></font></div></div>\
 											<div class="col-xs-4 col-sm-6 myleftpadding" onclick="viewFriend('+fId+')"><div style="padding-top:7px"><font size="4"><strong>'+fName+'</strong></font></div></div>\
-											<div class="col-xs-3 col-sm-2"><div style="padding-top:9px"><button style="font-size:10px;width:52px;" class="btn btn-danger btn-xs pull-right" onclick="removeUser('+fId+')">Remove</button></div></div>\
+											<div class="col-xs-3 col-sm-2"><div style="padding-top:9px"><button style="font-size:10px;width:52px;" class="btn btn-danger btn-xs pull-right" onclick="removeFriend('+fId+')">Remove</button></div></div>\
 										</div>\
 									</div>';
 							}

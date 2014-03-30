@@ -109,6 +109,35 @@ public class UserController {
 		}
 		return json;
 	}
+	
+	public static JSONObject removeFriend(JSONObject inputJson){
+		JSONObject json = new JSONObject();
+		
+		try{
+			long userId = Long.parseLong((String)inputJson.get("userId"));
+			long friendId = Long.parseLong((String)inputJson.get("friendId"));
+			User u = UserManager.getUserById(userId);
+			
+			String friendStr = "";
+			try{
+				friendStr = u.getfriends();
+			}catch(Exception e){
+			}
+			
+			friendStr = friendStr.replace(""+friendId, "0");
+			
+			u.setFriends(friendStr);
+			UserManager.modifyUser(u);
+			
+			json.put("status", "1");
+			json.put("message", "success");
+		}catch(Exception e){
+			e.printStackTrace();json.put("status","0");
+			json.put("message",e.toString());
+		}
+		
+		return json;
+	}
 
 	public static JSONObject getUserById(JSONObject inputJson) {
 		JSONObject json = new JSONObject();
@@ -148,7 +177,9 @@ public class UserController {
 			for (int i=0; i<arr.length; i++){
 				long uid=Long.parseLong(arr[i]);
 				User u=UserManager.getUserById(uid);
-				myFriends.add(u.toJson());
+				if(u != null){
+					myFriends.add(u.toJson());
+				}
 			}
 			
 			json.put("status", "1");

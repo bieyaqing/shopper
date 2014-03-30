@@ -1,3 +1,7 @@
+.mybgcolor{
+	background-color: #EEEEFF;
+}
+
 .thumbnail,.form-group{
 	margin-bottom: 0;
 }
@@ -69,16 +73,27 @@
 
 #sidecontent, #sidecontent2, #sidecontent3{
 	position: fixed;
-	background-color: #f2f2f2;
 	width: 100%;
 	left: 100%;
 	transition: left 0.4s;
 	-webkit-transition: left 0.4s; /* Safari */
 }
 
+#sidecontent{
+	background-color: #FFF5FF;
+}
+
+#sidecontent2{
+	background-color: #F5FFF5;
+}
+
+#sidecontent3{
+	background-color: #FFF5FF;
+}
+
 #helpcontent{
 	position: fixed;
-	background-color: #f2f2f2;
+	background-color: #FFFFEB;
 	width: 100%;
 	left: -100%;
 	transition: left 0.4s;

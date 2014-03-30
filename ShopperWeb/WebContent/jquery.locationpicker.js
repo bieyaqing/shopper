@@ -172,7 +172,7 @@
 				$current = $this;
 				var $inputOffset = $this.offset();
 				$lp.css({
-					left : $inputOffset.left,
+					left : $inputOffset.left - 70,
 					top : $inputOffset.top - $this.outerHeight() + 15
 				});
 				$lp.fadeIn('fast');
