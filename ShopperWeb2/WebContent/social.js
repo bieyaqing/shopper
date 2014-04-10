@@ -404,7 +404,7 @@ function addFriendInMyEvent(id, eventId){
 }
 
 function removeFriend(id){
-	var r = confirm("Are you sure remove this friend?");
+	var r = confirm("Do you wish to remove this friend?");
 	
 	if(r){
 		$(document).ready(function(){

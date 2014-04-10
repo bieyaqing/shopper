@@ -794,7 +794,7 @@ function backToMine(){
 }
 
 function cancelEvent(id){
-	var r = confirm("Are you sure cancel this event?");
+	var r = confirm("Do you wish to cancel the event?");
 	if(r == true){
 		var cancelJson = '{"eventId":"'+id+'"}';
 		$(document).ready(function(){

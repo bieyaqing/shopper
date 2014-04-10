@@ -16,6 +16,56 @@ function mineHelp(){
 					<img src="img/help/mine03.png" class="img-responsive"/>\
 				</div>\
 			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/mine04.png" class="img-responsive"/>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/mine05.png" class="img-responsive"/>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/mine06.png" class="img-responsive"/>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/mine07.png" class="img-responsive"/>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/mine08.png" class="img-responsive"/>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/mine09.png" class="img-responsive"/>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/mine10.png" class="img-responsive"/>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/mine11.png" class="img-responsive"/>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/mine12.png" class="img-responsive"/>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/mine13.png" class="img-responsive"/>\
+				</div>\
+			</div>\
 		</div>';
 	
 	$("#helpcontent").html(mhhtml);
@@ -47,6 +97,11 @@ function discoverHelp(){
 			<div class="row">\
 				<div class="col-xs-12">\
 					<img src="img/help/discover02.png" class="img-responsive"/>\
+				</div>\
+			</div>\
+			<div class="row">\
+				<div class="col-xs-12">\
+					<img src="img/help/discover03.png" class="img-responsive"/>\
 				</div>\
 			</div>\
 		</div>';
