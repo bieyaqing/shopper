@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<link href="bootstrap3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="jquery.mobile-1.4.1/jquery.mobile-1.4.1.min.css" rel="stylesheet" type="text/css" />
+<link href="index.css" rel="stylesheet" type="text/css" />
+<title>Shopper</title>
+</head>
+<body>
+	<div id="home" data-role="page">
+		<div id="header" data-role="header" data-position="fixed" data-theme="b">
+			<h3><strong id="headertext">Header</strong></h3>
+			<a id="headerbtn" class="ui-btn ui-btn-right ui-icon-plus ui-btn-icon-notext ui-corner-all">No text</a>
+		</div>
+		<div role="main" class="ui-content" id="maincontent">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12" id="settingbox">
+						<div class="row">
+							<div class="col-xs-4">
+								<div class="thumbnail">
+									<img src="img/photo01.png" class="img-responsive img-rounded mybigimg">
+								</div>
+							</div>
+							<div class="col-xs-8">
+								<div class="row">
+									<div class="col-xs-9">
+										<input class="form-control input-sm" type="text">
+									</div>
+									<div class="col-xs-3">
+										<button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span></button>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span>Change password</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer" data-position="fixed" data-role="footer" data-theme="b">
+			<div data-role="navbar">
+				<ul>
+					<li><button class="tagBtn" id="mineBtn" data-iconpos="top" data-icon="star" onclick="mine()"><font size="1">Mine</font></button></li>
+					<li><button class="tagBtn" id="discoverBtn" data-iconpos="top" data-icon="eye" onclick="discover()"><font size="1">Discover</font></button></li>
+					<li><button class="tagBtn" id="socialBtn" data-iconpos="top" data-icon="heart" onclick="social()"><font size="1">Social</font></button></li>
+					<li><button class="tagBtn" id="settingBtn" data-iconpos="top" data-icon="gear" onclick="setting()"><font size="1">Setting</font></button></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<script src="jquery-1.11.0.min.js"></script>
+	<script src="bootstrap3/js/bootstrap.min.js"></script>
+	<script src="jquery.mobile-1.4.1/jquery.mobile-1.4.1.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$("#maincontent").outerHeight($(window).outerHeight()-$("#header").outerHeight()-$("#footer").outerHeight()+2);
+		$("#settingbox").outerHeight($("#maincontent").outerHeight()-32);
+	});
+	</script>
+</body>
+</html>
